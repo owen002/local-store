@@ -1,100 +1,109 @@
-let session = window && window.sessionStorage;
-let local = window && window.localStorage;
-
-// 测试本地存储是否可以用
-let canLS = true;
-try {
-    local.setItem("ls_can", "1");
-    if (local.getItem("ls_can") != "1") {
-        canLS = false;
+var local = (function (window) {
+    let session;
+    let local;
+    if (window) {
+        session = window.sessionStorage;
+        local = window.localStorage;
     }
-} catch (e) {
-    canLS = false;
-}
-
-if (!canLS) {
-    // 无本地存储，模拟本地实现
-    let LSStore = {};
-    local = {
-        getItem(key) {
-            return LSStore[key];
-        },
-        setItem(key, val) {
-            LSStore[key] = val;
-        },
-        removeItem(key) {
-            try {
-                delete LSStore[key];
-            } catch (e) { }
+    // 测试local session本地存储是否可以用
+    let canStore = true;
+    try {
+        local.setItem("_test_store", "test");
+        if (local.getItem("_test_store") != "test") {
+            canStore = false;
         }
-    };
-    let SSStore = {};
-    session = {
-        getItem(key) {
-            return SSStore[key];
-        },
-        setItem(key, val) {
-            SSStore[key] = val;
-        }
-    };
-}
+    } catch (e) {
+        canStore = false;
+    }
 
-function getItem(obj) {
-    let key = obj.key;
-    let val = obj.store.getItem(key);
-    if (val) {
-        val = JSON.parse(val);
-        let exp = val.expoiration;
-        if (exp) {
-            let time = new Date().getTime();
-            if (exp === -1 || time <= exp) {
-                return val.item;
+    if (!canStore) {
+        // 无本地存储，模拟实现
+        let LSStore = {};
+        local = {
+            getItem(key) {
+                return LSStore[key];
+            },
+            setItem(key, val) {
+                LSStore[key] = val;
+            },
+            removeItem(key) {
+                try {
+                    delete LSStore[key];
+                } catch (e) { }
+            }
+        };
+        let SSStore = {};
+        session = {
+            getItem(key) {
+                return SSStore[key];
+            },
+            setItem(key, val) {
+                SSStore[key] = val;
+            }
+        };
+    }
+
+    function getItem(obj) {
+        let key = obj.key;
+        let val = obj.store.getItem(key);
+        if (val) {
+            val = JSON.parse(val);
+            let exp = val.expoiration;
+            if (exp) {
+                let time = new Date().getTime();
+                if (exp === -1 || time <= exp) {
+                    return val.item;
+                }
             }
         }
     }
-}
 
-function setItem(obj) {
-    let key = obj.key, val = obj.val, exp = obj.exp || -1;
-    let last = 0;
-    if (typeof exp === "number") {
-        let day = 24 * 60 * 60 * 1000;
-        if (exp === -1) {
-            last = -1;
+    /**
+     * 
+     * @param {*} obj   {key 键,val 值,exp 天数} 
+     */
+    function setItem(obj) {
+        let key = obj.key, val = obj.val, exp = obj.exp || -1;
+        let last = 0;
+        if (typeof exp === "number") {
+            let day = 24 * 60 * 60 * 1000;
+            if (exp === -1) {
+                last = -1;
+            } else {
+                last = new Date().getTime() + day * exp;
+            }
         } else {
-            last = new Date().getTime() + day * exp;
+            last = new Date(exp.replace(/-/g, "/")).getTime();
         }
-    } else {
-        last = new Date(exp.replace(/-/g, "/")).getTime();
+        let item = {
+            item: val,
+            expoiration: last
+        };
+        obj.store.setItem(key, JSON.stringify(item));
     }
-    let item = {
-        item: val,
-        expoiration: last
-    };
-    obj.store.setItem(key, JSON.stringify(item));
-}
 
-let localStore = {
-    removeLocal(key) {
-        local.removeItem(key);
-    },
-    removeSession(key) {
-        session.removeItem(key);
-    },
-    // 封装wx setStorageSync getStorageSync
-    localSet(key, val, exp = -1) {
-        setItem({ store: local, key, val, exp });
-    },
+    let localStore = {
+        removeLocal(key) {
+            local.removeItem(key);
+        },
+        removeSession(key) {
+            session.removeItem(key);
+        },
+        localSet(key, val, exp = -1) {
+            setItem({ store: local, key, val, exp });
+        },
 
-    localGet(key) {
-        return getItem({ key, store: local });
-    },
-    sessionSet(key, val, exp = -1) {
-        setItem({ store: session, key, val, exp });
-    },
-    sessionGet(key) {
-        return getItem({ key, store: session });
+        localGet(key) {
+            return getItem({ key, store: local });
+        },
+        sessionSet(key, val, exp = -1) {
+            setItem({ store: session, key, val, exp });
+        },
+        sessionGet(key) {
+            return getItem({ key, store: session });
+        }
     }
-}
+    return localStore
+})(this)
 
-module.exports = localStore;
+module.exports = local;

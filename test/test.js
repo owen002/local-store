@@ -1,6 +1,4 @@
-var localstore = require("../src/index.js")
+// var {localstore} = require("local-store-hw")
+var localstore = require("../src/index")
 
-localstore.sessionSet("test",{"testkey":"testval"},0.5)
-
-
-console.log(localstore.sessionGet("test"))
+console.log(localstore)
