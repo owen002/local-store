@@ -1,0 +1,24 @@
+{
+  "name": "local-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/localstore.1.0.0.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/owen002/local-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/owen002/local-store/issues"
+  },
+  "homepage": "https://github.com/owen002/local-store#readme",
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
