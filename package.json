@@ -1,8 +1,8 @@
 {
   "name": "@raulowen/localstore",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "",
-  "main": "dist/localstore.1.0.3.js",
+  "main": "dist/localstore.1.0.0.js",
   "scripts": {
     "build": "webpack"
   },
