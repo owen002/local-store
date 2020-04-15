@@ -1,8 +1,8 @@
 {
   "name": "local-store-hw",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "dist/localstore.1.0.1.js",
+  "main": "dist/localstore.1.0.2.js",
   "scripts": {
     "build": "webpack"
   },
