@@ -1,8 +1,8 @@
 {
-  "name": "local-store-hw",
-  "version": "1.0.2",
+  "name": "@raulowen/localstore",
+  "version": "1.0.3",
   "description": "",
-  "main": "dist/localstore.1.0.2.js",
+  "main": "dist/localstore.1.0.3.js",
   "scripts": {
     "build": "webpack"
   },
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/owen002/local-store.git"
   },
-  "keywords": ["local-store"],
+  "keywords": ["localstore"],
   "author": "",
   "license": "ISC",
   "bugs": {
