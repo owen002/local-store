@@ -1,16 +1,19 @@
 {
   "name": "local-store-hw",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "",
-  "main": "dist/localstore.1.0.3.js",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "rollup": "rollup -c"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/owen002/local-store.git"
   },
-  "keywords": ["localstore"],
+  "keywords": [
+    "localstore"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -18,7 +21,16 @@
   },
   "homepage": "https://github.com/owen002/local-store#readme",
   "devDependencies": {
+    "rollup": "^2.6.1",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-uglify": "^6.0.4",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "local-store-hw": "^1.0.3"
   }
 }

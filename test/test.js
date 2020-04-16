@@ -1,4 +1,5 @@
-var {localstore} = require("local-store-hw")
-// var localstore = require("../src/index")
+var localstore = require("../dist/localstore")
+import localstore from  require("../dist/localstore")
 
-console.log(localstore)
+
+console.log(localstore)∂

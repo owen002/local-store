@@ -1,6 +1,6 @@
-# @raulowen/localstore
+# localstore
 
-## npm i -S @raulowen/localstore
+## npm i -S local-store-hw
 
 ## import localstore from "@raulowen/localstore"
 
